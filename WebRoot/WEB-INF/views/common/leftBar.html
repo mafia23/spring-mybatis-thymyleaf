@@ -1,0 +1,67 @@
+<div class="page-sidebar nav-collapse collapse" th:fragment="leftBar">
+			<!-- BEGIN SIDEBAR MENU -->        
+			<ul class="page-sidebar-menu">
+				<li>
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+					<div class="sidebar-toggler hidden-phone"></div>
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+				</li>
+				<li>
+					<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+					<form class="sidebar-search">
+						<div class="input-box">
+							<a href="javascript:;" class="remove"></a>
+							<input type="text" placeholder="Search..." />
+							<input type="button" class="submit" value=" " />
+						</div>
+					</form>
+					<!-- END RESPONSIVE QUICK SEARCH FORM -->
+				</li>
+				<li class="start ">
+					<a href="#">
+						<i class="icon-home"></i> 
+						<span class="title">主页</span>
+					</a>
+				</li>
+				<li class="active ">
+					<a href="javascript:;">
+						<i class="icon-user"></i> 
+						<span class="title">用户管理</span>
+						<span class="selected"></span>
+						<span class="arrow open"></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="#" th:href="${ctx+'/user'}">
+							用户列表</a>
+						</li>
+						<li>
+							<a href="#" th:href="${ctx+'/user'}" >
+							角色列表</a>
+						</li>
+					</ul>
+				</li>
+
+				<li class="last ">
+					<a href="#">
+						<i class="icon-bar-chart"></i> 
+						<span class="title">系统管理</span>
+					</a>
+				</li>
+			</ul>
+			<!-- END SIDEBAR MENU -->
+		</div>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+		jQuery(document).ready(function() {    
+			//高度自己适应设备
+			$("div.page-content").css("min-height",$(window).height() - 82);
+			
+			$(".page-sidebar a").click(function(eve){
+				
+			});
+			App.init();
+
+		});
+	/*]]>*/
+</script>		

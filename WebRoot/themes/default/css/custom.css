@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+table{
+	border-top:1px solid #0000ff;
+	border-left:1px solid #0000ff;
+	border-spacing: 0px;
+}
+table td{
+	border-right:1px solid #0000ff;
+	border-bottom:1px solid #0000ff;
+}
+table th{
+	border-right:1px solid #0000ff;
+	border-bottom:1px solid #0000ff;
+}
+
+.container-fluid .title{
+	margin-left: 20%;
+	margin-bottom: 30px;
+	font-size: 26px;
+	font-weight: 700;
+	display: inline-block;
+}
+.container-fluid td .msg{
+	color: red;
+}
+.container-fluid td {
+	text-align: right;
+}

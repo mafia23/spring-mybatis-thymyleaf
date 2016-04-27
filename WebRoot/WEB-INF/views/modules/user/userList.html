@@ -1,0 +1,51 @@
+<div class="row-fluid" th:fragment="content">
+	<div class="span12">
+		<div class="portlet box purple">
+			<div class="portlet-title">
+				<div class="caption"><i class="icon-cogs"></i>Simple Table</div>
+				<div class="tools">
+					<a href="javascript:;" class="collapse"></a>
+					<a href="#portlet-config" data-toggle="modal" class="config"></a>
+					<a href="javascript:;" class="reload"></a>
+					<a href="javascript:;" class="remove"></a>
+				</div>
+			</div>
+			
+			<div class="portlet-body">
+				<div class="clearfix">
+					<div class="btn-group">
+						<button id="sample_editable_1_new" class="btn green">新增<i class="icon-plus"></i>
+						</button>
+					</div>
+					<div class="btn-group pull-right">
+						<button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="icon-angle-down"></i>
+						</button>
+						<ul class="dropdown-menu pull-right">
+							<li><a href="#">Print</a></li>
+							<li><a href="#">Save as PDF</a></li>
+							<li><a href="#">Export to Excel</a></li>
+						</ul>
+					</div>
+				</div>
+				<table class="table table-hover table-striped table-bordered" id="userlist">
+					<tr>
+						<th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#userlist.checkboxes" /></th>
+						<th>id</th>
+						<th>username</th>
+						<th>psd</th>
+						<th width="100px">修改</th>
+						<th width="100px">删除</th>
+					</tr>
+					<tr  class="odd gradeX" th:each="user:${result}">
+						<td><input type="checkbox" class="checkboxes" value="${user.id}" /></td>
+						<td th:text="${user.id}">aaa</td>
+						<td th:text="${user.name}">aaa</td>
+						<td th:text="${user.psd}">aaaaa</td>
+						<td><a class="btn mini purple"><i class="icon-edit"></i>&nbsp;&nbsp;修改</a></td>
+						<td><a class="btn mini red" data-toggle="modal" data-target="#static" href="#"><i class="icon-trash"></i>&nbsp;&nbsp;删除</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

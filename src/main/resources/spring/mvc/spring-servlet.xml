@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+                           http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+                           default-autowire="byType">
+
+
+	<!-- **************************************************************** -->
+	<!-- RESOURCE FOLDERS CONFIGURATION -->
+	<!-- Dispatcher configuration for serving static resources -->
+	<!-- **************************************************************** -->
+	<mvc:resources location="/themes/" mapping="/themes/**" />
+
+	<!-- 启用spring mvc 注解-->
+	<context:annotation-config />
+	<mvc:default-servlet-handler/>
+	
+	<!-- mvc: 标签配置转换器 -->
+	<mvc:annotation-driven >
+		<mvc:message-converters>
+          <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+              <property name="supportedMediaTypes">
+                  <list>
+                      	<value>text/plain;charset=UTF-8</value>
+				   		<value>text/html;charset=UTF-8</value>
+                  </list>
+              </property>
+          </bean>
+      </mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 使用AnnotationMethodHandlerAdapter 配置消息转换器-->
+	<!-- 
+	    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+			<property name = "messageConverters">
+			  <list>
+			   <bean class = "org.springframework.http.converter.StringHttpMessageConverter">
+			   		<property name = "supportedMediaTypes">
+				   		<list>
+				   			<value>text/plain;charset=UTF-8</value>
+				   			<value>text/html;charset=UTF-8</value>
+				   			<value>application/json;charset=UTF-8</value>
+				   		</list>
+			   		</property>
+			   </bean>
+			  </list>
+			 </property>
+		</bean>
+	 -->
+	 
+    <!-- interceptor -->
+ 	<mvc:interceptors>
+ 		<mvc:interceptor>
+ 			<mvc:mapping path="/*"/>
+            <bean class="fun.web.interceptor.LocalInterceptor"></bean>
+ 		</mvc:interceptor>
+ 	</mvc:interceptors>
+ 	
+	<!-- use thymeleaf -->
+	 <bean id="templateResolver" 
+        class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML5" />
+        <property name="cacheable" value="false" />
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+
+    <bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+ 
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="contentNegotiationManager" ref="cnManager"/>
+        
+        <property name="viewResolvers">
+        	<list>
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+                    <property name="order" value="1"/>
+                </bean>
+                
+                <bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+                    <property name="templateEngine" ref="templateEngine" />
+                    <property name="characterEncoding" value="UTF-8"/>
+                    <property name="order" value="2"/>
+                    <property name="excludedViewNames" value="*.xml" />
+                </bean>
+        
+				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="prefix" value="/WEB-INF/views/"/>
+                    <property name="suffix" value=".jsp"/>
+                    <property name="order" value="3"/>
+                </bean>
+        	</list>
+        </property>
+    </bean>
+
+    <!-- Simple strategy: only path extension is taken into account -->
+    <bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="favorPathExtension" value="true"/>
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="defaultContentType" value="text/html"/>
+        
+        <property name="mediaTypes">
+            <map>
+                <entry key="html" value="text/html" />
+                <entry key="xml" value="application/xml" />
+                <entry key="atom" value="application/atom+xml" />
+            </map>
+        </property>
+    </bean>
+	
+	<!-- end of use thymeleaf  -->
+	
+  	<context:component-scan base-package="fun">
+		<context:include-filter type="regex" expression=".web.controller.*" />
+	</context:component-scan>
+
+</beans>
+
+
